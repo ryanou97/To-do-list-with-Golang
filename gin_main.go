@@ -22,7 +22,7 @@ func test(c *gin.Context) {
 }
 func main() {
 	server := gin.Default()
-	server.LoadHTMLGlob("template/*")
-	server.GET("/", test)
-	server.Run(":8888") //啟動
+	server.LoadHTMLGlob("template/*") //將 index.html 放在 template 的目錄底下
+	server.GET("/", test)             //設定 routing
+	server.Run(":8888")               //啟動
 }
