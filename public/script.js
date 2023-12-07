@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
 function fetchTasks() {
     fetch("/tasks")
         .then(response => response.json())
@@ -16,9 +17,23 @@ function fetchTasks() {
             const taskList = document.getElementById("taskList");
             taskList.innerHTML = "";
 
-            tasks.forEach(task => {
+            // 將未完成的任務和已取消勾選的任務分開處理
+            const undoneTasks = tasks.filter(task => !task.done);
+            const doneTasks = tasks.filter(task => task.done);
+
+            // 將新勾選的任務放到所有任務的最下面
+            const sortedDoneTasks = doneTasks.sort((a, b) => a.done - b.done);
+
+            // 將取消勾選的任務放到未勾選的任務的最下面
+            const sortedUndoneTasks = undoneTasks.sort((a, b) => b.done - a.done);
+
+            // 合併所有任務
+            const sortedTasks = [...sortedUndoneTasks, ...sortedDoneTasks];
+
+            sortedTasks.forEach(task => {
                 const li = document.createElement("li");
                 const checkbox = document.createElement("input");
+
                 checkbox.type = "checkbox";
                 checkbox.checked = task.done;
                 checkbox.addEventListener("change", function () {
@@ -62,32 +77,34 @@ function addTask() {
 }
 
 function updateTaskStatus(id, done) {
-    if (done) {
-        fetch(`/tasks/${id}`, {
-            method: "DELETE",
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log(result.message);
-                fetchTasks();
-            });
-    } else {
-        fetch(`/tasks/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                done: done,
-            }),
-        })
-            .then(response => response.json())
-            .then(task => {
-                console.log(`Task ${task.id} updated: done=${task.done}`);
-                fetchTasks();
-            });
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            done: done,
+        }),
+    };
+
+    fetch(`/tasks/${id}`, requestOptions)
+        .then(response => response.json())
+        .then(task => {
+            console.log(`Task ${task.id} updated: done=${task.done}`);
+            fetchTasks();
+        });
+
+    // 如果取消選取，並且 task 沒有完成，移除刪除線
+    if (!done) {
+        const taskList = document.getElementById("taskList");
+        const taskItem = taskList.querySelector(`[data-task-id="${id}"]`);
+
+        if (taskItem) {
+            taskItem.style.textDecoration = "none";
+        }
     }
 }
+
 
 function formatTime(timeString) {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };

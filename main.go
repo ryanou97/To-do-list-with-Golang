@@ -144,9 +144,9 @@ func UpdateTask(c *gin.Context) {
 		return
 	}
 
-	_, err := db.Exec("UPDATE tasks SET name = ?, done = ? WHERE id = ?", task.Name, task.Done, id)
+	_, err := db.Exec("UPDATE tasks SET done = 1 WHERE id = ?", id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Task not found"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
