@@ -120,7 +120,8 @@ func CreateTaskHandler(c *gin.Context) {
 		return
 	}
 
-	result, err := db.Exec("INSERT INTO tasks (name, done) VALUES (?, ?)", task.Name, task.Done)
+	// 將 created_time 欄位加入 INSERT 語句
+	result, err := db.Exec("INSERT INTO tasks (name, done, created_time) VALUES (?, ?, NOW())", task.Name, task.Done)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

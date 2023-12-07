@@ -2,6 +2,14 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchTasks();
+
+    const taskInput = document.getElementById("taskInput");
+    taskInput.addEventListener("keyup", function (event) {
+        // 如果按下的是 Enter 鍵且輸入框有文字
+        if (event.key === "Enter" && taskInput.value.trim() !== "") {
+            addTask();
+        }
+    });
 });
 
 function fetchTasks() {
