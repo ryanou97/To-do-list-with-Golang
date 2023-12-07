@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -14,7 +15,7 @@ var db *sql.DB
 func init() {
 	var err error
 	// 開啟 MySQL 資料庫連接
-	db, err = sql.Open("mysql", "root:1234@tcp(127.0.0.1:3306)/todo_db")
+	db, err = sql.Open("mysql", "user:1234@tcp(127.0.0.1:3306)/todo_db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -47,12 +48,23 @@ type Task struct {
 func main() {
 	r := gin.Default()
 
+	// 使用CORS中間件處理跨域問題
+	r.Use(cors.Default())
+
+	// 添加此路由處理根路徑的請求
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"message": "Welcome to the ToDo List API"})
+	})
+
 	// 定義路由
 	r.GET("/tasks", GetTasks)
 	r.GET("/tasks/:id", GetTask)
-	r.POST("/tasks", CreateTask)
+	r.POST("/tasks", CreateTaskHandler)
 	r.PUT("/tasks/:id", UpdateTask)
 	r.DELETE("/tasks/:id", DeleteTask)
+
+	// 設置靜態文件路徑
+	r.Static("/public", "./public")
 
 	// 啟動伺服器
 	if err := r.Run(":8080"); err != nil {
@@ -79,6 +91,11 @@ func GetTasks(c *gin.Context) {
 		tasks = append(tasks, task)
 	}
 
+	// 確保當任務列表為空時返回空的 JSON 數組
+	if tasks == nil {
+		tasks = []Task{}
+	}
+
 	c.JSON(http.StatusOK, tasks)
 }
 
@@ -95,8 +112,8 @@ func GetTask(c *gin.Context) {
 	c.JSON(http.StatusOK, task)
 }
 
-// CreateTask 創建新任務
-func CreateTask(c *gin.Context) {
+// CreateTaskHandler 創建新任務
+func CreateTaskHandler(c *gin.Context) {
 	var task Task
 	if err := c.ShouldBindJSON(&task); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
