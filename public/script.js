@@ -1,11 +1,8 @@
-// script.js
-
 document.addEventListener("DOMContentLoaded", function () {
     fetchTasks();
 
     const taskInput = document.getElementById("taskInput");
     taskInput.addEventListener("keyup", function (event) {
-        // 如果按下的是 Enter 鍵且輸入框有文字
         if (event.key === "Enter" && taskInput.value.trim() !== "") {
             addTask();
         }
@@ -35,13 +32,13 @@ function fetchTasks() {
                 }
 
                 const span = document.createElement("span");
-                span.textContent = task.name;
+                span.innerHTML = `<span style="float: left; font-weight: bold;">${task.name}</span><span style="float: right;">${formatTime(task.created_time)}</span>`;
                 li.appendChild(span);
-
                 taskList.appendChild(li);
             });
         });
 }
+
 
 function addTask() {
     const taskInput = document.getElementById("taskInput");
@@ -90,4 +87,12 @@ function updateTaskStatus(id, done) {
                 fetchTasks();
             });
     }
+}
+
+function formatTime(timeString) {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
+    const formattedTime = new Date(timeString).toLocaleDateString(undefined, options);
+
+    // 將斜線替換為短橫線
+    return formattedTime.replace(/\//g, '-');
 }

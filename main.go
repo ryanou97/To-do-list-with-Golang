@@ -31,7 +31,8 @@ func init() {
 		CREATE TABLE IF NOT EXISTS tasks (
 			id INT AUTO_INCREMENT PRIMARY KEY,
 			name VARCHAR(255),
-			done BOOLEAN
+			done BOOLEAN,
+			created_time DATETIME
 		);
 	`)
 	if err != nil {
@@ -40,9 +41,10 @@ func init() {
 }
 
 type Task struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Done bool   `json:"done"`
+	ID          int    `json:"id"`
+	Name        string `json:"name"`
+	Done        bool   `json:"done"`
+	CreatedTime string `json:"created_time"`
 }
 
 func main() {
@@ -74,7 +76,7 @@ func main() {
 
 // GetTasks 返回所有任務
 func GetTasks(c *gin.Context) {
-	rows, err := db.Query("SELECT id, name, done FROM tasks")
+	rows, err := db.Query("SELECT id, name, done, created_time FROM tasks")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -84,7 +86,7 @@ func GetTasks(c *gin.Context) {
 	var tasks []Task
 	for rows.Next() {
 		var task Task
-		if err := rows.Scan(&task.ID, &task.Name, &task.Done); err != nil {
+		if err := rows.Scan(&task.ID, &task.Name, &task.Done, &task.CreatedTime); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
