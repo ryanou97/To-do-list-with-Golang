@@ -144,7 +144,8 @@ func UpdateTask(c *gin.Context) {
 		return
 	}
 
-	_, err := db.Exec("UPDATE tasks SET done = 1 WHERE id = ?", id)
+	// checkbox 更新 done 欄位
+	_, err := db.Exec("UPDATE tasks SET done = ? WHERE id = ?", task.Done, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

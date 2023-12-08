@@ -91,18 +91,19 @@ function updateTaskStatus(id, done) {
         .then(response => response.json())
         .then(task => {
             console.log(`Task ${task.id} updated: done=${task.done}`);
-            fetchTasks();
+            // 如果取消選取，並且 task 沒有完成，移除刪除線
+            if (!done) {
+                const taskList = document.getElementById("taskList");
+                const taskItem = taskList.querySelector(`[data-task-id="${id}"]`);
+
+                if (taskItem) {
+                    taskItem.style.textDecoration = "none";
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Error updating task status:", error);
         });
-
-    // 如果取消選取，並且 task 沒有完成，移除刪除線
-    if (!done) {
-        const taskList = document.getElementById("taskList");
-        const taskItem = taskList.querySelector(`[data-task-id="${id}"]`);
-
-        if (taskItem) {
-            taskItem.style.textDecoration = "none";
-        }
-    }
 }
 
 
