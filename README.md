@@ -41,7 +41,7 @@ flush privileges;
 go run main.go
 ```
 
-5. 輸入 url http://localhost:8080/public([https://www.google.com](http://localhost:8080/public))
+5. 開啟 ([https://www.google.com](http://localhost:8080/public))
 
 ## Docker
 1. 安裝 DOCKER
