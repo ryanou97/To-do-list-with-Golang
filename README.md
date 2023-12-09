@@ -20,7 +20,7 @@
    cd your-repository
    ```
 
-2. 建立 user 與 MySQL 資料庫 (在docker也可以)
+2. 建立 MySQL user 與資料庫'todo_db' (在docker也可以)
    ```bash
    CREATE USER 'user'@'localhost' IDENTIFIED BY '1234';
    GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost';
