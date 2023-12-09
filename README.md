@@ -15,30 +15,30 @@
 
 ## 使用方式
 1. clone 程式碼
-```bash
-git clone https://github.com/ryanou97/To-do-list-with-Golang.git
-cd your-repository
-```
+   ```bash
+   git clone https://github.com/ryanou97/To-do-list-with-Golang.git
+   cd your-repository
+   ```
 
 2. 建立 user 與 MySQL 資料庫 (在docker也可以)
-```bash
-CREATE USER 'user'@'localhost' IDENTIFIED BY '1234';
-GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost';
-flush privileges;
-CREATE DATABASE todo_db; 
-````
+   ```bash
+   CREATE USER 'user'@'localhost' IDENTIFIED BY '1234';
+   GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost';
+   flush privileges;
+   CREATE DATABASE todo_db; 
+   ````
 
 3. 如果配置是主程式在本地端跑，mysql 使用 docker，那需要改成以下方式創建使用者，因為對 docker 來說你們不在同一個本地端。
-```bash
-CREATE USER 'username'@'172.17.0.1' IDENTIFIED BY '1234';
-GRANT ALL PRIVILEGES ON . TO 'username'@'172.17.0.1';
-flush privileges;
-````
+   ```bash
+   CREATE USER 'username'@'172.17.0.1' IDENTIFIED BY '1234';
+   GRANT ALL PRIVILEGES ON . TO 'username'@'172.17.0.1';
+   flush privileges;
+   ````
 
 4. 執行程式
-```bash
-go run main.go
-```
+   ```bash
+   go run main.go
+   ```
 
 5. 開啟 ([[https://www.google.com](http://localhost:8080/public)](http://localhost:8080/public))
 
