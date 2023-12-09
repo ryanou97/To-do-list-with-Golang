@@ -1,6 +1,8 @@
 # To-do tasks with Golang
-這是一個 Web 介面的代辦事項清單應用程式，可以新增、更新和刪除任務。以 html、css、JS 作為前端，Golang實作後端功能並操作資料庫。並將專案與資料庫分別製作成 container，提升資源利用及部屬效率。
-正在規劃加入 google Oauth2.0 做為使用者驗證以及將資料庫轉為 NoSQL (golang目前不支援mongodb 6.0以上版本，故暫時使用mysql作為資料庫)。
+這是一個 Web 介面的代辦事項清單應用程式，可以新增、更新和刪除任務。
+以 html、css、JS 作為前端，Golang實作後端功能並操作資料庫。並將專案與資料庫分別以 container 呈現，提升資源利用及部署效率。
+正在規劃加入 google Oauth2.0 做為使用者驗證以及將資料庫轉為 NoSQL 
+(golang目前不支援mongodb 6.0以上版本，故暫時使用mysql作為資料庫)。
 
 
 ## 使用的技術
