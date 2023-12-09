@@ -74,3 +74,6 @@
    ```bash
    docker run --name todo -p 8080:8080 -it "your_imageID"
    ```
+7. MySQL 的部分可直間從 hub pull下來，創建使用者與資料庫的部分與前面一至。
+   - 須注意在啟動時加入 Environment variables : MYSQL_ROOT_PASSWORD 1234
+9.
