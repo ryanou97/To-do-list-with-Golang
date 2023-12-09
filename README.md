@@ -4,7 +4,7 @@
 正在規劃加入 google Oauth2.0 做為使用者驗證以及將資料庫轉為 NoSQL 
 (golang目前不支援mongodb 6.0以上版本，故暫時使用mysql作為資料庫)。
 
-![todo_demo]('images/todo_demo.png')
+![todo_demo](images/todo_demo.png)
 
 ## 使用的技術
 - Golang (Go)
