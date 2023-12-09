@@ -46,7 +46,13 @@
 1. 安裝 DOCKER
 2. main.go 裡資料庫連線的部分需要跟改
    ```Go
-   db, err = sql.Open("mysql", "user:1234@tcp(todo_mysql)/todo_db")
+   func init() {
+   	var err error
+   	// 開啟 MySQL 資料庫連接
+   	db, err = sql.Open("mysql", "user:1234@tcp(todo_mysql)/todo_db")
+   	if err != nil {
+   		log.Fatal(err)
+   	}
    ```
 4. 在資料夾下建立 DOCKERFILE
    ```DOCKERFILE
