@@ -76,4 +76,6 @@
    ```
 7. MySQL 的部分可直間從 hub pull下來，創建使用者與資料庫的部分與前面一至。
    - 須注意在啟動時加入 Environment variables : MYSQL_ROOT_PASSWORD 1234
-9.
+   ```bash
+   docker run --name todo_mysql -p 3306:3306 "your_image_ID" -e MYSQL_ROOT_PASSWORD=1234
+   ```
