@@ -11,12 +11,8 @@
 - HTML
 - CSS
 - JavaScript
-- MySQL 
-
-
-## 建立名為 todo_db 的資料庫。
-在 main.go 中更新資料庫連線詳細資訊。
-建構並執行應用程式：
+- MySQL
+- 
 
 ## 使用方式
 1. clone 程式碼
@@ -40,14 +36,12 @@ GRANT ALL PRIVILEGES ON . TO 'username'@'172.17.0.1';
 flush privileges;
 ````
 
-4. 
+4. 執行程式
 ```bash
 go run main.go
 ```
 
-
-4. 
-進入 url http://localhost:8080/public([https://www.google.com](http://localhost:8080/public))
+5. 輸入 url http://localhost:8080/public([https://www.google.com](http://localhost:8080/public))
 
 ## Docker
 1. 安裝 DOCKER
