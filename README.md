@@ -28,7 +28,7 @@
    CREATE DATABASE todo_db; 
    ````
 
-3. 如果配置是主程式在本地端跑，mysql 使用 docker，那需要改成以下方式創建使用者，因為對 docker 來說你們不在同一個本地端。
+3. 如果配置是主程式在本地端跑，mysql 使用 docker，那需要改成以下方式創建使用者，因為 docker 不覺得他和你在同一個本地端。
    ```bash
    CREATE USER 'username'@'172.17.0.1' IDENTIFIED BY '1234';
    GRANT ALL PRIVILEGES ON . TO 'username'@'172.17.0.1';
