@@ -5,6 +5,7 @@
 (golang目前不支援mongodb 6.0以上版本，故暫時使用mysql作為資料庫)。
 
 ![todo_demo](images/todo_demo.png){: .center-block }
+<center><img src="/images/todo_demo.png" alt="todo_demo"></center>
 
 ## 使用的技術
 - Golang (Go)
