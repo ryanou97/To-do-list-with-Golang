@@ -12,7 +12,6 @@
 - CSS
 - JavaScript
 - MySQL
-- 
 
 ## 使用方式
 1. clone 程式碼
