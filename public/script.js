@@ -1,15 +1,18 @@
+// 監聽事件
 document.addEventListener("DOMContentLoaded", function () {
     fetchTasks();
 
     const taskInput = document.getElementById("taskInput");
     taskInput.addEventListener("keyup", function (event) {
+
+        // 按 Enter 和 button 都可以送出
         if (event.key === "Enter" && taskInput.value.trim() !== "") {
             addTask();
         }
     });
 });
 
-
+// 獲取任務列表並更新頁面
 function fetchTasks() {
     fetch("/tasks")
         .then(response => response.json())
@@ -54,7 +57,7 @@ function fetchTasks() {
         });
 }
 
-
+// 增加 Task
 function addTask() {
     const taskInput = document.getElementById("taskInput");
     const taskName = taskInput.value;
@@ -106,7 +109,7 @@ function updateTaskStatus(id, done) {
         });
 }
 
-
+// 修改顯示在 task 的時間
 function formatTime(timeString) {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
     const formattedTime = new Date(timeString).toLocaleDateString(undefined, options);

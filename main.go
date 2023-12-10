@@ -58,14 +58,15 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"message": "Welcome to the ToDo List API"})
 	})
 
-	// 定義路由
+	// 定義 route
 	r.GET("/tasks", GetTasks)
 	r.GET("/tasks/:id", GetTask)
 	r.POST("/tasks", CreateTaskHandler)
 	r.PUT("/tasks/:id", UpdateTask)
 	r.DELETE("/tasks/:id", DeleteTask)
 
-	// 設置靜態文件路徑
+	// 設置靜態文件路徑:
+	// 訪問 localhost:8080/public/{file} 可獲取 ./public 下的 file
 	r.Static("/public", "./public")
 
 	// 啟動伺服器
@@ -74,16 +75,20 @@ func main() {
 	}
 }
 
-// GetTasks 返回所有任務
+// 返回所有任務
 func GetTasks(c *gin.Context) {
 	rows, err := db.Query("SELECT id, name, done, created_time FROM tasks")
+
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	defer rows.Close()
 
 	var tasks []Task
+
+	// 遍歷 tasks 資料表的資料放入 tasks []Task
 	for rows.Next() {
 		var task Task
 		if err := rows.Scan(&task.ID, &task.Name, &task.Done, &task.CreatedTime); err != nil {
@@ -101,8 +106,9 @@ func GetTasks(c *gin.Context) {
 	c.JSON(http.StatusOK, tasks)
 }
 
-// GetTask 返回指定 ID 的任務
+// 返回指定 ID 的任務
 func GetTask(c *gin.Context) {
+	// 獲取 URL 路由的 id 參數
 	id := c.Param("id")
 	var task Task
 	err := db.QueryRow("SELECT id, name, done FROM tasks WHERE id = ?", id).Scan(&task.ID, &task.Name, &task.Done)
@@ -111,10 +117,11 @@ func GetTask(c *gin.Context) {
 		return
 	}
 
+	// 如果沒錯誤，回傳 200
 	c.JSON(http.StatusOK, task)
 }
 
-// CreateTaskHandler 創建新任務
+// 創建新任務
 func CreateTaskHandler(c *gin.Context) {
 	var task Task
 	if err := c.ShouldBindJSON(&task); err != nil {
@@ -135,7 +142,7 @@ func CreateTaskHandler(c *gin.Context) {
 	c.JSON(http.StatusCreated, task)
 }
 
-// UpdateTask 更新指定 ID 的任務
+// 更新指定 ID 的任務
 func UpdateTask(c *gin.Context) {
 	id := c.Param("id")
 	var task Task
